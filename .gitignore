@@ -1,0 +1,24 @@
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+profile
+*.moved-aside
+DerivedData
+.idea/
+*.hmap
+*.xccheckout
+*.xcworkspace
+!default.xcworkspace
+
+# OS X
+.DS_Store
+
+#CocoaPods
+Pods
+*.xcuserdatad
+*.xcscmblueprint
+*.xcworkspace
+xcuserdata/
+UserInterfaceState.xcuserstate
+project.xcworkspace/
+
