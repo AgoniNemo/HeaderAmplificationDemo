@@ -5,6 +5,7 @@ def base_pods
 
   pod 'Masonry'
   pod 'YYCategories'
+  pod 'MLeaksFinder', :configuration => 'Debug'
 
 end
 

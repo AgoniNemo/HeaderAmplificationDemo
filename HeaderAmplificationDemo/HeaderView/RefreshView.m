@@ -1,6 +1,5 @@
 //
 //  RefreshView.m
-//  xiangwan
 //
 //  Created by Nemo on 2019/9/8.
 //  Copyright © 2019 mac. All rights reserved.

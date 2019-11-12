@@ -1,6 +1,5 @@
 //
 //  HomepageBaseViewController.h
-//  xiangwan
 //
 //  Created by Nemo on 2019/9/10.
 //  Copyright © 2019 mac. All rights reserved.

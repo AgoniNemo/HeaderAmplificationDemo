@@ -1,6 +1,5 @@
 //
 //  NavView.h
-//  CQ_App
 //
 //  Created by mac on 2019/4/3.
 //  Copyright © 2019年 mac. All rights reserved.
@@ -18,10 +17,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIColor *titleColor;
 @property (nonatomic, strong) NSString *rightTitle;
 @property (nonatomic, strong) NSString *leftTitle;
-
+@property (nonatomic, strong) NSString *moreIcon;
 
 @property (nonatomic, copy) void(^leftAction)(void);
 @property (nonatomic, copy) void(^rightAction)(void);
+@property (nonatomic, copy) void(^moreAction)(void);
 
 - (void)setBackgroundAlpha:(CGFloat)alpha;
 

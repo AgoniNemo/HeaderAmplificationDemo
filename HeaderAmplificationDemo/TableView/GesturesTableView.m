@@ -1,6 +1,5 @@
 //
 //  GesturesTableView.m
-//  xiangwan
 //
 //  Created by mac on 2019/9/9.
 //  Copyright © 2019 mac. All rights reserved.
@@ -10,12 +9,22 @@
 #import <objc/runtime.h>
 #import "RefreshView.h"
 
-#define MARGINTOP   50      //刷新icon区间
-#define ICONSIZE    24      //下拉刷新icon 的大小
-
-#define CircleTime  0.8     //旋转一圈所用时间
-#define IconBackTime 0.2    //icon刷新完返回最顶端的时间
-
+//刷新icon区间
+CG_INLINE CGFloat MARGINTOP() {
+    return 50;
+}
+//下拉刷新icon 的大小
+CG_INLINE CGFloat ICONSIZE() {
+    return 24;
+}
+//旋转一圈所用时间
+CG_INLINE CGFloat CircleTime() {
+    return 0.8;
+}
+//icon刷新完返回最顶端的时间
+CG_INLINE CGFloat IconBackTime() {
+    return 0.25;
+}
 typedef NS_ENUM(NSInteger,StatusOfRefresh) {
     Refresh_Default = 1,     //非刷新状态，该值不能为0
     Refresh_BeginRefresh,    //刷新状态
@@ -64,12 +73,12 @@ typedef NS_ENUM(NSInteger,StatusOfRefresh) {
 
 /**icon下拉范围**/
 - (CGFloat)threshold {
-    return -MARGINTOP;
+    return -MARGINTOP();
 }
 
 /**offsetcollection**/
 - (CGFloat)offsetCollect {
-    return 10;
+    return 7;
 }
 
 - (void)addRefreshViewForView:(UIView *)view atPoint:(CGPoint)position downRefresh:(void(^)(void))block {
@@ -86,11 +95,9 @@ typedef NS_ENUM(NSInteger,StatusOfRefresh) {
         CGRect positionFrame;
         
         if (position.x || position.y) {
-            positionFrame = CGRectMake(position.x, self.frame.origin.y + position.y, ICONSIZE, ICONSIZE);
-            NSLog(@"=========position.x=========");
+            positionFrame = CGRectMake(position.x, self.frame.origin.y + position.y, ICONSIZE(), ICONSIZE());
         } else {
-            NSLog(@"=========position.%f=========",self.frame.origin.y);
-            positionFrame = CGRectMake(16, self.frame.origin.y + kStatusBarAndNavigationBarHeight - ICONSIZE, ICONSIZE, ICONSIZE);
+            positionFrame = CGRectMake(16, self.frame.origin.y + kStatusBarAndNavigationBarHeight - ICONSIZE(), ICONSIZE(), ICONSIZE());
         }
         self.refreshView = [[RefreshView alloc] initWithFrame:positionFrame];
     }
@@ -125,6 +132,10 @@ typedef NS_ENUM(NSInteger,StatusOfRefresh) {
     
     CGFloat offsetY = self.contentOffset.y;
     
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.06 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        weakSelf.oldoOffset = contentOffset;
+    });
+    
     /**异步调用主线程**/
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -135,14 +146,10 @@ typedef NS_ENUM(NSInteger,StatusOfRefresh) {
                 
                 /**刷新状态**/
             } else if (strongSelf.refreshStatus ==  Refresh_BeginRefresh) {
-                NSLog(@"==== %f",contentOffset.y);
-
                 [strongSelf refreshingHandleWithOffSet:offsetY];
             }
         });
     });
-    
-    self.oldoOffset = contentOffset;
 }
 
 /**
@@ -271,7 +278,6 @@ typedef NS_ENUM(NSInteger,StatusOfRefresh) {
         /**把nsPoint结构体转换为cgPoint**/
         CGPoint oldPoint = self.oldoOffset;
         CGPoint newPoint = self.contentOffset;
-        
         dispatch_async(dispatch_get_main_queue(), ^{
             if (oldPoint.y < newPoint.y) {
                 weakSelf.refreshView.refreshIcon.transform = CGAffineTransformRotate(weakSelf.refreshView.refreshIcon.transform,-weakSelf.offsetCollect/50);
@@ -299,7 +305,7 @@ typedef NS_ENUM(NSInteger,StatusOfRefresh) {
             //逆时针效果
             weakSelf.animation.fromValue = [NSNumber numberWithFloat:0.f];
             weakSelf.animation.toValue =  [NSNumber numberWithFloat: -M_PI *2];
-            weakSelf.animation.duration  = CircleTime;
+            weakSelf.animation.duration  = CircleTime();
             weakSelf.animation.autoreverses = NO;
             weakSelf.animation.removedOnCompletion = NO;
             weakSelf.animation.fillMode =kCAFillModeForwards;
@@ -349,7 +355,6 @@ typedef NS_ENUM(NSInteger,StatusOfRefresh) {
                 [weakSelf endRefresh];
                 [timer invalidate];
             }];
-            
             //iOS10 以下
         } else {
             [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(timerCall:) userInfo:nil repeats:YES];
@@ -362,7 +367,7 @@ typedef NS_ENUM(NSInteger,StatusOfRefresh) {
     if (self.refreshStatus !=  Refresh_None) {
         self.refreshStatus =  Refresh_None;
         
-        [UIView animateWithDuration:IconBackTime animations:^{
+        [UIView animateWithDuration:IconBackTime() animations:^{
             [weakSelf.refreshView setContentOffset:CGPointMake(0, 0)];
             weakSelf.refreshView.refreshIcon.alpha = 0;
         } completion:^(BOOL finished) {
@@ -388,10 +393,4 @@ typedef NS_ENUM(NSInteger,StatusOfRefresh) {
     [timer invalidate];
 }
 
-/**
- 释放观察
- */
-- (void)freeReFresh {
-    
-}
 @end

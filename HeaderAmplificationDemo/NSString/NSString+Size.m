@@ -1,6 +1,5 @@
 //
 //  NSString+Size.m
-//  CQ_App
 //
 //  Created by Nemo on 2019/4/10.
 //  Copyright © 2019年 mac. All rights reserved.

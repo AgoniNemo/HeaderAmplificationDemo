@@ -1,6 +1,5 @@
 //
 //  GesturesTableView.h
-//  xiangwan
 //
 //  Created by mac on 2019/9/9.
 //  Copyright © 2019 mac. All rights reserved.
@@ -33,11 +32,6 @@ NS_ASSUME_NONNULL_BEGIN
  开始刷新
  */
 - (void)beginRefresh;
-
-/**
- 释放观察者，用于手动释放，否则将会在界面退出时自动释放
- */
-- (void)freeReFresh;
 
 @end
 

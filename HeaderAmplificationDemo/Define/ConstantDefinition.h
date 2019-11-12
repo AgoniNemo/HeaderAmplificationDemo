@@ -1,6 +1,5 @@
 //
 //  ConstantDefinition.h
-//  CQ_App
 //
 //  Created by mac on 2019/3/21.
 //  Copyright © 2019年 mac. All rights reserved.
@@ -8,31 +7,6 @@
 
 #ifndef ConstantDefinition_h
 #define ConstantDefinition_h
-
-
-#pragma mark - ——————— 数据库相关 ————————
-
-CG_INLINE NSString *OWNER(NSString *a,NSString *b) {
-    return [NSString stringWithFormat:@"owner = '%@' AND %@ ",b,a];
-}
-
-#pragma mark - ——————— 支付、FireBase相关 ————————
-
-
-#if DevelopMent ==0
-/*********正式环境*********/
-#define FIREBASEFILENAME @"GoogleService-Info"
-
-#elif DevelopMent ==1
-/*********开发环境*********/
-#define FIREBASEFILENAME @"GoogleService-Info_dev"
-
-#else
-/*********测试环境*********/
-#define FIREBASEFILENAME @"GoogleService-Info_dev"
-
-#endif
-
 
 #pragma mark - ——————— 字体与颜色相关 ————————
 
@@ -43,31 +17,6 @@ CG_INLINE UIFont *FONTBOLDSIZE(CGFloat a) {
     return [UIFont fontWithName:@"PingFangSC-Semibold" size:a];
 }
 
-
-//品牌色
-CG_INLINE UIColor * BRANDCOLOR() {
-    return RGBACOLOR(0, 212, 231, 1.0);
-}
-//辅助色
-CG_INLINE UIColor * AUXILIARYCOLOR() {
-    return RGBACOLOR(199, 164, 104, 1.0);
-}
-//辅助色2
-CG_INLINE UIColor * AUXILIARYCOLOR2() {
-    return RGBACOLOR(250, 244, 235, 1.0);
-}
-//成功色
-CG_INLINE UIColor * SUCCESSCOLOR() {
-    return HEXCOLOR(0x4CD964);
-}
-//警告色
-CG_INLINE UIColor * WARNINGCOLOR() {
-    return RGBACOLOR(230, 47, 92, 1.0);
-}
-
-CG_INLINE UIColor * SHADOWCOLOR() {
-    return RGBACOLOR(0, 26, 37, 0.2);
-}
 // 黑色 COLOR222222
 CG_INLINE UIColor * MAINCOLOR() {
     return RGBACOLOR(34, 34, 34, 1.0);

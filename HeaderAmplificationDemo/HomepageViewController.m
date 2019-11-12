@@ -14,7 +14,6 @@
 #import "GesturesTableView.h"
 #import "HeaderView.h"
 #import "NavView.h"
-#import "UIView+Refresh.h"
 
 @interface HomepageViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, weak) GesturesTableView *tableView;
@@ -96,25 +95,16 @@
     line.backgroundColor = COLOREDEDED().CGColor;
     [scroll.scroller.layer addSublayer:line];
     
-//    __weak typeof(tableView) weakTable = tableView;
-//    [tableView addRefreshViewForView:self.view atPoint:CGPointZero downRefresh:^{
-//        //开始刷新
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//            //3 秒后结束刷新
-//            [weakTable endRefresh];
-//        });
-//        NSLog(@"=========test=========");
-//    }];
-    
-    [self.view refreshWithObject:tableView atPoint:CGPointZero downRefresh:^{
-        __strong typeof(weakSelf) strongSelf = weakSelf;
+    __weak typeof(tableView) weakTable = tableView;
+    [tableView addRefreshViewForView:self.view atPoint:CGPointZero downRefresh:^{
         //开始刷新
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             //3 秒后结束刷新
-            [strongSelf.view endRefresh];
+            [weakTable endRefresh];
         });
         NSLog(@"=========test=========");
     }];
+
     [self createNavView];
 }
 - (void)createNavView {
@@ -139,7 +129,6 @@
     if (offsetY < 0) {
         [self.headerView overScrollAction:offsetY];
     }else {
-        //        BOOL b = (self.curIdx == 0) ?self.actVC.scrollEnabled:self.scVC.scrollEnabled;
         if (self.isCannotScroll) {
             scrollView.contentOffset = CGPointMake(0, self.fixedH);
             scrollView.bounces = NO;

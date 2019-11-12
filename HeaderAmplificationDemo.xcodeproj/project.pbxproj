@@ -28,7 +28,6 @@
 		048EE92B2376A30F000D434A /* GesturesTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 048EE92A2376A30F000D434A /* GesturesTableView.m */; };
 		048EE92F2376A74C000D434A /* UIViewController+Hidden.m in Sources */ = {isa = PBXBuildFile; fileRef = 048EE92E2376A74C000D434A /* UIViewController+Hidden.m */; };
 		048EE9322376B126000D434A /* RefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = 048EE9312376B126000D434A /* RefreshView.m */; };
-		048EE9352376B371000D434A /* UIView+Refresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 048EE9342376B371000D434A /* UIView+Refresh.m */; };
 		BF7CEEF5B0F5326926B78FE0 /* libPods-HeaderAmplificationDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24B6371B4378867A4503D67D /* libPods-HeaderAmplificationDemo.a */; };
 /* End PBXBuildFile section */
 
@@ -95,8 +94,6 @@
 		048EE92E2376A74C000D434A /* UIViewController+Hidden.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Hidden.m"; sourceTree = "<group>"; };
 		048EE9302376B126000D434A /* RefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefreshView.h; sourceTree = "<group>"; };
 		048EE9312376B126000D434A /* RefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RefreshView.m; sourceTree = "<group>"; };
-		048EE9332376B371000D434A /* UIView+Refresh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+Refresh.h"; sourceTree = "<group>"; };
-		048EE9342376B371000D434A /* UIView+Refresh.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+Refresh.m"; sourceTree = "<group>"; };
 		24B6371B4378867A4503D67D /* libPods-HeaderAmplificationDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HeaderAmplificationDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		827B82B500CF6FEF6D23C20E /* Pods-HeaderAmplificationDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HeaderAmplificationDemo.release.xcconfig"; path = "Target Support Files/Pods-HeaderAmplificationDemo/Pods-HeaderAmplificationDemo.release.xcconfig"; sourceTree = "<group>"; };
 		8495B23DABF4C875DF7E358A /* Pods-HeaderAmplificationDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HeaderAmplificationDemo.debug.xcconfig"; path = "Target Support Files/Pods-HeaderAmplificationDemo/Pods-HeaderAmplificationDemo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -255,8 +252,6 @@
 				048EE9312376B126000D434A /* RefreshView.m */,
 				048EE9252376A0B0000D434A /* HeaderView.h */,
 				048EE9262376A0B0000D434A /* HeaderView.m */,
-				048EE9332376B371000D434A /* UIView+Refresh.h */,
-				048EE9342376B371000D434A /* UIView+Refresh.m */,
 			);
 			path = HeaderView;
 			sourceTree = "<group>";
@@ -457,7 +452,6 @@
 				048EE9322376B126000D434A /* RefreshView.m in Sources */,
 				048EE90C23769B34000D434A /* XZCScrollView.m in Sources */,
 				048EE92B2376A30F000D434A /* GesturesTableView.m in Sources */,
-				048EE9352376B371000D434A /* UIView+Refresh.m in Sources */,
 				048EE90B23769B34000D434A /* NemoScrollerView.m in Sources */,
 				048EE92323769F03000D434A /* TwoViewController.m in Sources */,
 				048EE90A23769B34000D434A /* XZCScrollerButton.m in Sources */,

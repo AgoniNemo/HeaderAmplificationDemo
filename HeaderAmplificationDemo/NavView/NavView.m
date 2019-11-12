@@ -1,6 +1,5 @@
 //
 //  NavView.m
-//  CQ_App
 //
 //  Created by mac on 2019/4/3.
 //  Copyright © 2019年 mac. All rights reserved.
@@ -10,8 +9,9 @@
 
 @interface NavView()
 @property (nonatomic, weak) UILabel  *titleLb;
-@property (nonatomic, weak) UIButton *leftBtn;
+@property (nonatomic, strong) UIButton *leftBtn;
 @property (nonatomic, strong) UIButton *rightBtn;
+@property (nonatomic, strong) UIButton *moreBtn;
 @end
 
 @implementation NavView
@@ -26,10 +26,6 @@
 }
 
 - (void)setup {
-    UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [leftBtn addTarget:self action:@selector(leftBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:leftBtn];
-    self.leftBtn = leftBtn;
     
     //设置标题
     UILabel *titleLb = [[UILabel alloc] init];
@@ -40,26 +36,18 @@
     [self addSubview:titleLb];
     self.titleLb = titleLb;
 }
-/**
-- (UIView*)hitTest:(CGPoint)point withEvent:(UIEvent *)event{
-    UIView *hitView = [super hitTest:point withEvent:event];
-    if(hitView == self){
-        return nil;
-    }
-    return hitView;
-}*/
 
 #pragma --mark action
-- (void)leftBtnAction:(UIButton *)btn {
-    if (self.leftAction) {
-        self.leftAction();
-    }
+- (void)leftBtnAction {
+    !self.leftAction ?: self.leftAction();
 }
 
-- (void)rightBtnAction:(UIButton *)btn {
-    if (self.rightAction) {
-        self.rightAction();
-    }
+- (void)rightBtnAction {
+    !self.rightAction ?: self.rightAction();
+}
+
+- (void)moreBtnAction {
+    !self.moreAction ?: self.moreAction();
 }
 
 #pragma --mark set
@@ -68,7 +56,11 @@
     [self.leftBtn setImage:[UIImage imageNamed:leftIcon] forState:UIControlStateNormal];
     [self.leftBtn setImage:[UIImage imageNamed:leftIcon] forState:UIControlStateHighlighted];
 }
-
+-(void)setMoreIcon:(NSString *)moreIcon {
+    _moreIcon = moreIcon;
+    [self.moreBtn setImage:[UIImage imageNamed:moreIcon] forState:UIControlStateNormal];
+    [self.moreBtn setImage:[UIImage imageNamed:moreIcon] forState:UIControlStateHighlighted];
+}
 - (void)setRightIcon:(NSString *)rightIcon {
     _rightIcon = rightIcon;
     [self.rightBtn setImage:[UIImage imageNamed:rightIcon] forState:UIControlStateNormal];
@@ -94,7 +86,6 @@
 -(void)setTitle:(NSString *)title {
     _title = title;
     self.titleLb.text = title;
-    
 }
 
 - (void)setBackgroundAlpha:(CGFloat)alpha {
@@ -103,34 +94,56 @@
 }
 - (void)layoutSubviews {
     [super layoutSubviews];
-
-    CGFloat wh = [UIImage imageNamed:self.leftIcon].size.height;
     
-    [self.leftBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(wh);
-        make.left.mas_equalTo(16);
-        make.bottom.inset(10);
-    }];
-
-    [self.rightBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(-16);
-        make.bottom.inset(10);
-    }];
+    
+    CGFloat difference = 112;
+    if (_moreBtn) {
+        difference += 40;
+    }
     
     [self.titleLb mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self);
-        make.bottom.mas_equalTo(0);
-        make.height.mas_equalTo(44);
-        make.width.mas_lessThanOrEqualTo(nScreenWidth()-112);
+        make.bottom.inset(10);
+        make.height.mas_equalTo(24);
+        make.width.mas_lessThanOrEqualTo(nScreenWidth()-difference);
     }];
     
 }
 
+-(UIButton *)moreBtn {
+    if (_moreBtn == nil) {
+        _moreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_moreBtn addTarget:self action:@selector(moreBtnAction) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:_moreBtn];
+        [_moreBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.inset(56);
+            make.bottom.inset(10);
+        }];
+    }
+    return _moreBtn;
+}
+-(UIButton *)leftBtn {
+    if (_leftBtn == nil) {
+        _leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_leftBtn addTarget:self action:@selector(leftBtnAction) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:_leftBtn];
+        [_leftBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(16);
+            make.bottom.inset(10);
+        }];
+    }
+    return _leftBtn;
+    
+}
 -(UIButton *)rightBtn {
     if (_rightBtn == nil) {
         _rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_rightBtn addTarget:self action:@selector(rightBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+        [_rightBtn addTarget:self action:@selector(rightBtnAction) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_rightBtn];
+        [_rightBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.inset(16);
+            make.bottom.inset(10);
+        }];
     }
     return _rightBtn;
 }
