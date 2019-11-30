@@ -23,11 +23,12 @@ typedef void(^ButtonClickBlock)(NSInteger tag);
 @property (nonatomic, assign) NSInteger number;                     //每行的个数（默认5个）
 @property (nonatomic, assign) CGFloat radiusBtn;                     //边框的圆角
 @property (nonatomic, assign) BOOL isScroller;                      //是否处于滑动状态
+@property (nonatomic, assign) BOOL isShowLine;                      //是否显示线
 @property (nonatomic, assign) CGFloat totalWidth;                   //组件总长度
 @property (nonatomic, assign) CGFloat lineWidth;                    //线的总长度
 - (void)setButtonOnClickBlock: (ButtonOnClickBlock) block;
 - (void)setButtonClickBlock: (ButtonClickBlock) block;
 
-- (void)setButtonPositionWithNumber:(CGFloat)position;
+- (void)setButtonPositionWithScrollView:(UIScrollView *)scrollView;
 - (void)animationSelectPage:(NSInteger)page;
 @end

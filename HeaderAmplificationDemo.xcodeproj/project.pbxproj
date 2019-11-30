@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		046294D923924B2B00B97ADB /* XZCScrollerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 046294D523924B2A00B97ADB /* XZCScrollerButton.m */; };
+		046294DA23924B2B00B97ADB /* NemoScrollerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 046294D623924B2A00B97ADB /* NemoScrollerView.m */; };
+		046294DB23924B2B00B97ADB /* XZCScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 046294D823924B2A00B97ADB /* XZCScrollView.m */; };
 		048EE8CC237697D6000D434A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 048EE8CB237697D6000D434A /* AppDelegate.m */; };
 		048EE8CF237697D6000D434A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 048EE8CE237697D6000D434A /* ViewController.m */; };
 		048EE8D2237697D6000D434A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 048EE8D0237697D6000D434A /* Main.storyboard */; };
@@ -17,9 +20,6 @@
 		048EE8EF237697DC000D434A /* HeaderAmplificationDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 048EE8EE237697DC000D434A /* HeaderAmplificationDemoUITests.m */; };
 		048EE8FF23769A18000D434A /* HomepageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 048EE8FE23769A18000D434A /* HomepageViewController.m */; };
 		048EE90223769AA1000D434A /* HomepageBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 048EE90123769AA1000D434A /* HomepageBaseViewController.m */; };
-		048EE90A23769B34000D434A /* XZCScrollerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 048EE90623769B34000D434A /* XZCScrollerButton.m */; };
-		048EE90B23769B34000D434A /* NemoScrollerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 048EE90723769B34000D434A /* NemoScrollerView.m */; };
-		048EE90C23769B34000D434A /* XZCScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 048EE90923769B34000D434A /* XZCScrollView.m */; };
 		048EE90F23769B75000D434A /* NSString+Size.m in Sources */ = {isa = PBXBuildFile; fileRef = 048EE90D23769B74000D434A /* NSString+Size.m */; };
 		048EE91D23769EBD000D434A /* NavView.m in Sources */ = {isa = PBXBuildFile; fileRef = 048EE91B23769EBD000D434A /* NavView.m */; };
 		048EE92023769EF6000D434A /* OneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 048EE91F23769EF6000D434A /* OneViewController.m */; };
@@ -49,6 +49,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		046294D323924B2A00B97ADB /* NemoScrollerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NemoScrollerView.h; sourceTree = "<group>"; };
+		046294D423924B2A00B97ADB /* XZCScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZCScrollView.h; sourceTree = "<group>"; };
+		046294D523924B2A00B97ADB /* XZCScrollerButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZCScrollerButton.m; sourceTree = "<group>"; };
+		046294D623924B2A00B97ADB /* NemoScrollerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NemoScrollerView.m; sourceTree = "<group>"; };
+		046294D723924B2A00B97ADB /* XZCScrollerButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZCScrollerButton.h; sourceTree = "<group>"; };
+		046294D823924B2A00B97ADB /* XZCScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZCScrollView.m; sourceTree = "<group>"; };
 		048EE8C7237697D6000D434A /* HeaderAmplificationDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HeaderAmplificationDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		048EE8CA237697D6000D434A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		048EE8CB237697D6000D434A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -69,12 +75,6 @@
 		048EE8FE23769A18000D434A /* HomepageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomepageViewController.m; sourceTree = "<group>"; };
 		048EE90023769AA1000D434A /* HomepageBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomepageBaseViewController.h; sourceTree = "<group>"; };
 		048EE90123769AA1000D434A /* HomepageBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomepageBaseViewController.m; sourceTree = "<group>"; };
-		048EE90423769B34000D434A /* NemoScrollerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NemoScrollerView.h; sourceTree = "<group>"; };
-		048EE90523769B34000D434A /* XZCScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZCScrollView.h; sourceTree = "<group>"; };
-		048EE90623769B34000D434A /* XZCScrollerButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZCScrollerButton.m; sourceTree = "<group>"; };
-		048EE90723769B34000D434A /* NemoScrollerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NemoScrollerView.m; sourceTree = "<group>"; };
-		048EE90823769B34000D434A /* XZCScrollerButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZCScrollerButton.h; sourceTree = "<group>"; };
-		048EE90923769B34000D434A /* XZCScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZCScrollView.m; sourceTree = "<group>"; };
 		048EE90D23769B74000D434A /* NSString+Size.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Size.m"; sourceTree = "<group>"; };
 		048EE90E23769B75000D434A /* NSString+Size.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Size.h"; sourceTree = "<group>"; };
 		048EE91323769CD0000D434A /* MacroDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacroDefinition.h; sourceTree = "<group>"; };
@@ -125,6 +125,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		046294D223924B2A00B97ADB /* XZCScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				046294D323924B2A00B97ADB /* NemoScrollerView.h */,
+				046294D423924B2A00B97ADB /* XZCScrollView.h */,
+				046294D523924B2A00B97ADB /* XZCScrollerButton.m */,
+				046294D623924B2A00B97ADB /* NemoScrollerView.m */,
+				046294D723924B2A00B97ADB /* XZCScrollerButton.h */,
+				046294D823924B2A00B97ADB /* XZCScrollView.m */,
+			);
+			path = XZCScrollView;
+			sourceTree = "<group>";
+		};
 		048EE8BE237697D6000D434A = {
 			isa = PBXGroup;
 			children = (
@@ -150,13 +163,13 @@
 		048EE8C9237697D6000D434A /* HeaderAmplificationDemo */ = {
 			isa = PBXGroup;
 			children = (
+				046294D223924B2A00B97ADB /* XZCScrollView */,
 				048EE92C2376A734000D434A /* ViewController */,
 				048EE9282376A303000D434A /* TableView */,
 				048EE9242376A09F000D434A /* HeaderView */,
 				048EE91A23769EBD000D434A /* NavView */,
 				048EE91123769CD0000D434A /* Define */,
 				048EE91023769B7F000D434A /* NSString */,
-				048EE90323769B34000D434A /* XZCScrollView */,
 				048EE8FC23769994000D434A /* HomepageViewController */,
 				048EE8CA237697D6000D434A /* AppDelegate.h */,
 				048EE8CB237697D6000D434A /* AppDelegate.m */,
@@ -202,19 +215,6 @@
 				048EE90123769AA1000D434A /* HomepageBaseViewController.m */,
 			);
 			path = HomepageViewController;
-			sourceTree = "<group>";
-		};
-		048EE90323769B34000D434A /* XZCScrollView */ = {
-			isa = PBXGroup;
-			children = (
-				048EE90423769B34000D434A /* NemoScrollerView.h */,
-				048EE90523769B34000D434A /* XZCScrollView.h */,
-				048EE90623769B34000D434A /* XZCScrollerButton.m */,
-				048EE90723769B34000D434A /* NemoScrollerView.m */,
-				048EE90823769B34000D434A /* XZCScrollerButton.h */,
-				048EE90923769B34000D434A /* XZCScrollView.m */,
-			);
-			path = XZCScrollView;
 			sourceTree = "<group>";
 		};
 		048EE91023769B7F000D434A /* NSString */ = {
@@ -450,13 +450,13 @@
 				048EE9272376A0B0000D434A /* HeaderView.m in Sources */,
 				048EE8FF23769A18000D434A /* HomepageViewController.m in Sources */,
 				048EE9322376B126000D434A /* RefreshView.m in Sources */,
-				048EE90C23769B34000D434A /* XZCScrollView.m in Sources */,
 				048EE92B2376A30F000D434A /* GesturesTableView.m in Sources */,
-				048EE90B23769B34000D434A /* NemoScrollerView.m in Sources */,
+				046294DA23924B2B00B97ADB /* NemoScrollerView.m in Sources */,
 				048EE92323769F03000D434A /* TwoViewController.m in Sources */,
-				048EE90A23769B34000D434A /* XZCScrollerButton.m in Sources */,
+				046294D923924B2B00B97ADB /* XZCScrollerButton.m in Sources */,
 				048EE90F23769B75000D434A /* NSString+Size.m in Sources */,
 				048EE8CF237697D6000D434A /* ViewController.m in Sources */,
+				046294DB23924B2B00B97ADB /* XZCScrollView.m in Sources */,
 				048EE92F2376A74C000D434A /* UIViewController+Hidden.m in Sources */,
 				048EE91D23769EBD000D434A /* NavView.m in Sources */,
 				048EE8DA237697DB000D434A /* main.m in Sources */,

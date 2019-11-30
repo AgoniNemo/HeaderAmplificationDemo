@@ -14,19 +14,24 @@
 
 
 @interface XZCScrollerButton ()<UIScrollViewDelegate>
-{
-    NSInteger _count;
-    NSInteger _tag;
-}
+@property (nonatomic, assign) NSInteger selectIdx;
 @property (nonatomic, assign) CGFloat viewWidth;                    //单个组件的宽度
 @property (nonatomic, assign) CGFloat viewHeight;                   //单个组件的高度
 @property (nonatomic, strong) NSMutableArray *viewRects;            //所有的Lable rect
+/// 旧标题数组
+@property (nonatomic, strong) NSArray *oldTitle;
 
 @property (nonatomic, strong) UIView *heightLightView;
 @property (nonatomic, strong) UIView *heightTopView;
 @property (nonatomic, strong) UIView *heightColoreView;
 @property (nonatomic, strong) UIView *bottomLine;
-@property (nonatomic, strong) NSMutableArray * labelMutableArray;
+/// 底部的label
+@property (nonatomic, strong) NSMutableArray *bottomLabelArray;
+/// 顶部的label
+@property (nonatomic, strong) NSMutableArray *topLabelArray;
+/// 顶部的button
+@property (nonatomic, strong) NSMutableArray *topBtnArray;
+
 @property (nonatomic, copy) ButtonOnClickBlock buttonBlock;
 @property (nonatomic, copy) ButtonClickBlock buttonClick;
 @property (nonatomic, strong) UIScrollView *bottom;
@@ -41,6 +46,8 @@
         _viewWidth = frame.size.width;
         _viewHeight = frame.size.height;
         _duration = DEFAULT_DURATION;
+        self.selectIdx = 0;
+        self.isShowLine = YES;
     }
     return self;
 }
@@ -54,43 +61,65 @@
     [self createTopLables];
     [self createTopButtons];
 }
-
--(void)setButtonPositionWithNumber:(CGFloat)position{
-    self.isScroller = YES;
-    CGFloat selectPage = position/nScreenWidth();
-    NSInteger  index = 0;
-    if (selectPage > 1) {
-        index = selectPage;
-    }
-    CGFloat offset = (selectPage+1) * 16;
-
-    NSValue *value = _viewRects[index];
-    CGFloat lableW = value.CGRectValue.size.width;
-    CGFloat x = (lableW + offset)/nScreenWidth()*position;
+- (void)setButtonPositionWithScrollView:(UIScrollView *)scrollView {
     
-    NSValue *lastValue = nil;
-    if (_viewRects.count > 0) {
-        lastValue = _viewRects[_viewRects.count-1];
+    self.isScroller = YES;
+    CGFloat selectPage = scrollView.contentOffset.x/nScreenWidth();
+    if (selectPage > self.titles.count - 1 || selectPage < 0) {
+        return;
     }
-    if (x <= 16) {
-        x = 16;
-    }else if (x >= lastValue.CGRectValue.origin.x){
-        x = lastValue.CGRectValue.origin.x;
-//        NSLog(@">=>=>=>=>=");
+    
+    CGPoint translatedPoint = [scrollView.panGestureRecognizer translationInView:scrollView];
+    
+    NSInteger idx = floor(selectPage);
+    CGFloat position = selectPage - idx;
+    
+    CGFloat distance = 0;
+    CGFloat x = 0;
+    CGFloat lableW = 0;
+    
+    if (translatedPoint.x < 0) {
+        NSValue *curValue = _viewRects[idx];
+        distance = curValue.CGRectValue.size.width+16;
+        x = curValue.CGRectValue.origin.x + position*distance;
+        lableW = curValue.CGRectValue.size.width;
+        //NSLog(@"右滑 ===== %f  %f",position,distance);
     }
 
-    self.bottomLine.left = x;
+
+    if (translatedPoint.x > 0) {
+        NSValue *nxtValue = _viewRects[idx];
+        idx = (NSInteger)ceil(selectPage);
+        NSValue *curValue = _viewRects[idx];
+        distance = nxtValue.CGRectValue.size.width+16;
+        CGFloat k = 0;
+        if (position != 0) {
+            k = (1-position)*distance;
+        }
+        x = curValue.CGRectValue.origin.x - k;
+        lableW = curValue.CGRectValue.size.width;
+        if (nxtValue.CGRectValue.size.width < curValue.CGRectValue.size.width) {
+            CGFloat disW = fabs(nxtValue.CGRectValue.size.width-curValue.CGRectValue.size.width);
+            lableW -= disW;
+        }
+        //NSLog(@"左滑 ===== %f  %f",position,distance);
+    }
+    if (self.isShowLine) {
+        self.bottomLine.left = x;
+    }
     self.heightLightView.frame = CGRectMake(x, 0, lableW+16, _viewHeight-2);
     self.heightTopView.left = -x;
+    
+    self.selectIdx = idx;
 }
 
--(void) setButtonOnClickBlock: (ButtonOnClickBlock) block {
+-(void)setButtonOnClickBlock: (ButtonOnClickBlock) block {
     if (block) {
         _buttonBlock = block;
     }
 }
 
--(void) setButtonClickBlock:(ButtonClickBlock)block{
+-(void)setButtonClickBlock:(ButtonClickBlock)block{
     if (block) {
         _buttonClick = block;
     }
@@ -98,6 +127,10 @@
 
 -(void)setTitles:(NSArray *)titles{
     _titles = titles;
+    
+    if ([_oldTitle isEqualToArray:titles]) {
+        return;
+    }
     _totalWidth = 0;
     _viewRects = [[NSMutableArray alloc] init];
     CGRect oldRect = CGRectZero;
@@ -110,6 +143,43 @@
         _totalWidth += width;
     }
     _totalWidth += (titles.count)*16;
+
+    if (_oldTitle) {
+        [self updateTitle];
+    }
+    
+    _oldTitle = [titles mutableCopy];
+}
+
+
+- (void)updateTitle {
+    self.bottom.width = _totalWidth;
+    NSValue *value = _viewRects[self.selectIdx];
+    CGFloat lableW = value.CGRectValue.size.width;
+    CGFloat x = value.CGRectValue.origin.x;
+    _heightTopView.width = _totalWidth;
+    _heightTopView.left = -x;
+
+    _heightLightView.width = lableW;
+    _heightLightView.left = x;
+
+    _heightColoreView.width = lableW;
+
+    for (int i = 0; i < _titles.count; i ++) {
+        UILabel *btmLb = _bottomLabelArray[i];
+        CGRect currentLabelFrame = [self countCurrentRectWithIndex:i];
+        btmLb.frame = currentLabelFrame;
+        NSString *title = _titles[i];
+        btmLb.text = title;
+        
+        UILabel *topLb = _topLabelArray[i];
+        topLb.frame = currentLabelFrame;
+        topLb.text = title;
+        
+        UIButton *btn = _topBtnArray[i];
+        btn.frame = currentLabelFrame;
+    }
+    
 }
 
 
@@ -149,18 +219,19 @@
 /**
  *  创建最底层的Label
  */
-- (void) createBottomLabels {
+- (void)createBottomLabels {
+    _bottomLabelArray = [[NSMutableArray alloc] init];
     for (int i = 0; i < _titles.count; i ++) {
         UILabel *tempLabel = [self createLabelWithTitlesIndex:i textFont:_titlesFont?:FONTSIZE(16) textColor:_titlesCustomeColor];
         [self.bottom addSubview:tempLabel];
-        [_labelMutableArray addObject:tempLabel];
+        [_bottomLabelArray addObject:tempLabel];
     }
 }
 
 /**
  *  创建上一层高亮使用的Label
  */
-- (void) createTopLables {
+- (void)createTopLables {
     NSValue *value = _viewRects[0];
     CGFloat labelW = value.CGRectValue.size.width;
     
@@ -179,9 +250,11 @@
     
     _heightTopView = [[UIView alloc] initWithFrame: CGRectMake(0, 0, _totalWidth, _viewHeight)];
     
+    _topLabelArray = [[NSMutableArray alloc] init];
     for (int i = 0; i < _titles.count; i ++) {
         UILabel *label = [self createLabelWithTitlesIndex:i textFont:_titlesHeightFont?:FONTSIZE(16) textColor:_titlesHeightLightColor];
         [_heightTopView addSubview:label];
+        [_topLabelArray addObject:label];
     }
     [_heightLightView addSubview:_heightTopView];
     
@@ -190,22 +263,25 @@
 /**
  *  创建按钮
  */
-- (void) createTopButtons {
+- (void)createTopButtons {
+    _topBtnArray = [[NSMutableArray alloc] init];
     for (int i = 0; i < _titles.count; i ++) {
         CGRect tempFrame = [self countCurrentRectWithIndex:i];
         UIButton *tempButton = [[UIButton alloc] initWithFrame:tempFrame];
         tempButton.tag = i;
         [tempButton addTarget:self action:@selector(tapButton:) forControlEvents:UIControlEventTouchUpInside];
         [self.bottom addSubview:tempButton];
+        [_topBtnArray addObject:tempButton];
     }
-    NSValue *value = _viewRects[0];
-    CGFloat labelW = value.CGRectValue.size.width;
-    _bottomLine = [[UIView alloc] initWithFrame:CGRectMake(16, _viewHeight-3, _lineWidth?:labelW, 2)];
-    _bottomLine.backgroundColor = MAINCOLOR();
-    [_bottomLine.layer setMasksToBounds:YES];
-    [_bottomLine.layer setCornerRadius:1];
-    [self.bottom addSubview:_bottomLine];
-    
+    if (self.isShowLine) {
+        NSValue *value = _viewRects[0];
+        CGFloat labelW = value.CGRectValue.size.width;
+        _bottomLine = [[UIView alloc] initWithFrame:CGRectMake(16, _viewHeight-3, _lineWidth?:labelW, 2)];
+        _bottomLine.backgroundColor = MAINCOLOR();
+        [_bottomLine.layer setMasksToBounds:YES];
+        [_bottomLine.layer setCornerRadius:1];
+        [self.bottom addSubview:_bottomLine];
+    }
 }
 
 /**
@@ -214,7 +290,7 @@
  *  @param sender 点击的相应的按钮
  */
 - (void)tapButton:(UIButton *) sender {
-    
+    self.selectIdx = sender.tag;
     if (_buttonBlock && sender.tag < _titles.count) {
         _buttonBlock(sender.tag, _titles[sender.tag]);
     }
@@ -231,24 +307,20 @@
 }
 
 - (void)animationSelectPage:(NSInteger)page {
-    NSInteger  index = 0;
-    if (page > 1) {
-        index = page;
-    }
-    CGFloat offset = (page+1) * 16;
-    NSValue *value = _viewRects[index];
-    CGFloat labelW = value.CGRectValue.size.width;
-    CGFloat x = (labelW * page) + offset;
-    if (x <= 16) {
-        x = 16;
-    }
-    CGFloat sp = (_viewRects.count -1 == page)?0:16;
+    
+    NSValue *value = _viewRects[page];
+    CGFloat lableW = value.CGRectValue.size.width;
+    CGFloat x = value.CGRectValue.origin.x;
+
     __weak typeof(self) weak_self = self;
     [UIView animateWithDuration:_duration animations:^{
-        weak_self.heightLightView.frame = CGRectMake(x, 0, labelW+sp, weak_self.viewHeight-2);
+        weak_self.heightLightView.frame = CGRectMake(x, 0, lableW, weak_self.viewHeight-2);
         weak_self.heightTopView.left = -x;
-        weak_self.bottomLine.left = x;
+        if (weak_self.isShowLine) {
+            weak_self.bottomLine.left = x;
+        }
     } completion:^(BOOL finished) {}];
+    
 }
 -(void)dealloc
 {

@@ -69,11 +69,19 @@
 
 #pragma --mark setFunction
 
+-(void)setTitles:(NSArray *)titles {
+    _titles = titles;
+    _scroller.titles = titles;
+}
+
 -(void)setLineColor:(UIColor *)lineColor{
     _lineColor = lineColor;
     _scroller.lineColor = lineColor;
 }
-
+-(void)setLineWidth:(CGFloat)lineWidth {
+    _lineWidth = lineWidth;
+    _scroller.lineWidth = lineWidth;
+}
 -(void)setTextFont:(CGFloat)textFont
 {
     _textFont = textFont;
@@ -104,14 +112,9 @@
     CGFloat x = nScreenWidth()*selectPage;
     self.isClick = YES;
     [_scrollview setContentOffset:CGPointMake(x, 0) animated:NO];
-//    [_scroller setButtonPositionWithNumber:_scrollview.contentOffset.x];
-    [_scroller animationSelectPage:selectPage];
 
 }
--(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-//    NSLog(@"%s%@",__func__,NSStringFromCGPoint(scrollView.contentOffset));
-    
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {    
     NSInteger i = scrollView.contentOffset.x/nScreenWidth();
     self.selectPage = i;
     if (self.srollerAction) {
@@ -124,17 +127,13 @@
     _scroller.backgroundHeightLightColor = topViewColor;
     _scroller.backgroundColor = topViewColor;
 }
--(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
-{
-    //    NSLog(@"%s",__func__);
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     self.isClick = NO;
 }
 
--(void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    //    NSLog(@"%s%@",__func__,NSStringFromCGPoint(scrollView.contentOffset));
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (self.isClick) return;
-    [_scroller setButtonPositionWithNumber:scrollView.contentOffset.x];
+    [_scroller setButtonPositionWithScrollView:scrollView];
 }
 
 -(void)setViewControllers:(NSArray *)viewControllers
@@ -146,7 +145,7 @@
     
     [super layoutSubviews];
     
-    _scroller.titles = self.titles;
+//    _scroller.titles = self.titles;
     _scrollview.contentSize = CGSizeMake(self.titles.count*nScreenWidth(), _y);
     
 }
